@@ -97,8 +97,7 @@ class ProductCell: UICollectionViewCell {
         sellerLabel.bottomAnchor.constraint(equalTo: avatarImage.bottomAnchor).isActive = true
         sellerLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8).isActive = true
         sellerLabel.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2)
-        
-        
+ 
     }
     
 }

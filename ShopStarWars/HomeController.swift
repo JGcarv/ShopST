@@ -10,10 +10,12 @@ import UIKit
 
 class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    let cellId = "cellId"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .white
-        collectionView?.register(ProductCell.self, forCellWithReuseIdentifier: "cellId")
+        collectionView?.register(ProductCell.self, forCellWithReuseIdentifier: cellId)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -22,7 +24,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
         return cell
     }
     

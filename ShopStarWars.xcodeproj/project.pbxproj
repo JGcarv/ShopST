@@ -7,15 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6458D8421E84948F000C4623 /* CartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6458D8411E84948F000C4623 /* CartController.swift */; };
+		6474CF141E84A4B700952861 /* CartFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474CF131E84A4B700952861 /* CartFooter.swift */; };
+		6474CF161E84BC0100952861 /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6474CF151E84BC0100952861 /* PaymentView.swift */; };
+		64956F341E89AE99004D8DCB /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64956F331E89AE99004D8DCB /* Services.swift */; };
 		64E0AB4D1E81F21600E9AA08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E0AB4C1E81F21600E9AA08 /* AppDelegate.swift */; };
 		64E0AB541E81F21600E9AA08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64E0AB531E81F21600E9AA08 /* Assets.xcassets */; };
 		64E0AB571E81F21600E9AA08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64E0AB551E81F21600E9AA08 /* LaunchScreen.storyboard */; };
 		64E0AB5F1E81F4B100E9AA08 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E0AB5E1E81F4B100E9AA08 /* HomeController.swift */; };
 		64E0AB611E81F86E00E9AA08 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E0AB601E81F86E00E9AA08 /* ProductCell.swift */; };
 		64E0AB631E8203A800E9AA08 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E0AB621E8203A800E9AA08 /* TabBarController.swift */; };
+		A385BEBBDBD84829526F9E47 /* Pods_ShopStarWars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25754C5FD0E0F53FBF283180 /* Pods_ShopStarWars.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		25754C5FD0E0F53FBF283180 /* Pods_ShopStarWars.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShopStarWars.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DB62772CE539C95C5F58372 /* Pods-ShopStarWars.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShopStarWars.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShopStarWars/Pods-ShopStarWars.release.xcconfig"; sourceTree = "<group>"; };
+		6458D8411E84948F000C4623 /* CartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartController.swift; sourceTree = "<group>"; };
+		6474CF131E84A4B700952861 /* CartFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartFooter.swift; sourceTree = "<group>"; };
+		6474CF151E84BC0100952861 /* PaymentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
+		64956F331E89AE99004D8DCB /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		64E0AB491E81F21600E9AA08 /* ShopStarWars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShopStarWars.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64E0AB4C1E81F21600E9AA08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		64E0AB531E81F21600E9AA08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -24,6 +35,7 @@
 		64E0AB5E1E81F4B100E9AA08 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		64E0AB601E81F86E00E9AA08 /* ProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		64E0AB621E8203A800E9AA08 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		6616AA1F891AE45D37C0D434 /* Pods-ShopStarWars.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShopStarWars.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShopStarWars/Pods-ShopStarWars.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +43,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A385BEBBDBD84829526F9E47 /* Pods_ShopStarWars.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F76182E6A5DAD536289A323 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6616AA1F891AE45D37C0D434 /* Pods-ShopStarWars.debug.xcconfig */,
+				2DB62772CE539C95C5F58372 /* Pods-ShopStarWars.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5820DB32E4DF010E75C080FF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				25754C5FD0E0F53FBF283180 /* Pods_ShopStarWars.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		64E0AB401E81F21500E9AA08 = {
 			isa = PBXGroup;
 			children = (
 				64E0AB4B1E81F21600E9AA08 /* ShopStarWars */,
 				64E0AB4A1E81F21600E9AA08 /* Products */,
+				1F76182E6A5DAD536289A323 /* Pods */,
+				5820DB32E4DF010E75C080FF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,6 +95,10 @@
 				64E0AB581E81F21600E9AA08 /* Info.plist */,
 				64E0AB601E81F86E00E9AA08 /* ProductCell.swift */,
 				64E0AB621E8203A800E9AA08 /* TabBarController.swift */,
+				6458D8411E84948F000C4623 /* CartController.swift */,
+				6474CF131E84A4B700952861 /* CartFooter.swift */,
+				6474CF151E84BC0100952861 /* PaymentView.swift */,
+				64956F331E89AE99004D8DCB /* Services.swift */,
 			);
 			path = ShopStarWars;
 			sourceTree = "<group>";
@@ -74,9 +110,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 64E0AB5B1E81F21600E9AA08 /* Build configuration list for PBXNativeTarget "ShopStarWars" */;
 			buildPhases = (
+				8E41EBAE79AD4A73133B6B42 /* [CP] Check Pods Manifest.lock */,
 				64E0AB451E81F21500E9AA08 /* Sources */,
 				64E0AB461E81F21500E9AA08 /* Frameworks */,
 				64E0AB471E81F21500E9AA08 /* Resources */,
+				8DAE15BFB96E6F43D774CE3B /* [CP] Embed Pods Frameworks */,
+				2FF9871777A4601D0A9508BC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -133,13 +172,65 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2FF9871777A4601D0A9508BC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShopStarWars/Pods-ShopStarWars-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8DAE15BFB96E6F43D774CE3B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShopStarWars/Pods-ShopStarWars-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8E41EBAE79AD4A73133B6B42 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		64E0AB451E81F21500E9AA08 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6474CF141E84A4B700952861 /* CartFooter.swift in Sources */,
 				64E0AB611E81F86E00E9AA08 /* ProductCell.swift in Sources */,
 				64E0AB631E8203A800E9AA08 /* TabBarController.swift in Sources */,
+				6474CF161E84BC0100952861 /* PaymentView.swift in Sources */,
+				6458D8421E84948F000C4623 /* CartController.swift in Sources */,
+				64956F341E89AE99004D8DCB /* Services.swift in Sources */,
 				64E0AB4D1E81F21600E9AA08 /* AppDelegate.swift in Sources */,
 				64E0AB5F1E81F4B100E9AA08 /* HomeController.swift in Sources */,
 			);
@@ -254,6 +345,7 @@
 		};
 		64E0AB5C1E81F21600E9AA08 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6616AA1F891AE45D37C0D434 /* Pods-ShopStarWars.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ShopStarWars/Info.plist;
@@ -266,6 +358,7 @@
 		};
 		64E0AB5D1E81F21600E9AA08 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DB62772CE539C95C5F58372 /* Pods-ShopStarWars.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ShopStarWars/Info.plist;
@@ -295,6 +388,7 @@
 				64E0AB5D1E81F21600E9AA08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

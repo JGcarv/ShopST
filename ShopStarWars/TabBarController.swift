@@ -17,7 +17,7 @@ class TabBarController: UITabBarController {
         let homeNavController = UINavigationController(rootViewController: homeController)
         homeNavController.tabBarItem = UITabBarItem(title: "Home", image: nil, selectedImage: nil)
 
-        let cartController = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
+        let cartController = CartController(collectionViewLayout: UICollectionViewFlowLayout())
         let cartNavController = UINavigationController(rootViewController: cartController)
         cartNavController.tabBarItem = UITabBarItem(title: "Carrinho", image: nil, selectedImage: nil)
         cartNavController.tabBarItem.badgeValue = "1"
