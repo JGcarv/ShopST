@@ -7,3 +7,68 @@
 //
 
 import Foundation
+import Alamofire
+import SwiftyJSON
+
+struct Service {
+    
+    static let sharedInstance = Service()
+
+    func fetchProducts(completion: @escaping ([Product]) -> ()){
+        let url = "https://raw.githubusercontent.com/stone-pagamentos/desafio-mobile/master/products.json"
+        
+        Alamofire.request(url, method: .get).validate().responseJSON { response in
+            switch response.result {
+            case .failure(let erro):
+                print(erro)
+            case.success(let value):
+                let productsJSON = JSON(value)
+                var products: [Product] = []
+                for productJSON in productsJSON {
+                    
+                    let seller = productJSON.1["seller"].stringValue
+                    let title = productJSON.1["title"].stringValue
+                    let price = productJSON.1["price"].doubleValue
+                    let zipcode = productJSON.1["zipcode"].stringValue
+                    let thumbnailHd = productJSON.1["thumbnailHd"].stringValue
+                    let date = productJSON.1["date"].stringValue
+                    
+                    products.append(Product(title: title, price: price, zipcode: zipcode, seller: seller, thumbnailHD: thumbnailHd, date: date))
+                    
+                }
+                
+                completion(products)
+            }
+        }
+    }
+    
+    
+    
+    func makeTransction(trasaction: [String: Any]){
+        
+        let url = "http://private-926595-shopsw1.apiary-mock.com/shopsw/payment"
+        let parameters = trasaction
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+            switch response.result {
+            case .failure(let erro):
+                print(erro)
+            case .success(let value):
+                let statusJSON = JSON(value)
+                print(statusJSON)
+            }
+        }
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

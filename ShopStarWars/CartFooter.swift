@@ -44,6 +44,5 @@ class CartFooter: UICollectionViewCell {
     func pay(){
         //Do soemething?
         self.delegate?.launchPaymentView();
-        print("view lançada")
     }
 }

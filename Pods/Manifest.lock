@@ -1,12 +1,18 @@
 PODS:
+  - Alamofire (4.4.0)
+  - SwiftyJSON (3.1.4)
   - TinyConstraints (1.2.2)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.4)
+  - SwiftyJSON
   - TinyConstraints (~> 1.2)
 
 SPEC CHECKSUMS:
+  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TinyConstraints: 95944ff4f61f9a5fecb6adb4083dc1831e0a1e4b
 
-PODFILE CHECKSUM: 5a92d30181cece3a47b3c535d3d9eddf865dbfcd
+PODFILE CHECKSUM: 4a7b1fb2f66bac7b07939a63f0ef604d781eb9a0
 
 COCOAPODS: 1.2.0

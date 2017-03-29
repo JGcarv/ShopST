@@ -7,4 +7,6 @@ target 'ShopStarWars' do
 
   # Pods for ShopStarWars
   pod 'TinyConstraints', '~> 1.2'
+  pod 'Alamofire', '~> 4.4'
+  pod 'SwiftyJSON'
 end

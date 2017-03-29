@@ -64,7 +64,7 @@ class CartController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func launchPaymentView() {
-        self.navigationController?.pushViewController(PaymentViewController(), animated: false);
+        self.navigationController?.pushViewController(PaymentViewController(collectionViewLayout: UICollectionViewFlowLayout()), animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {

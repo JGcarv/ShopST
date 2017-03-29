@@ -10,53 +10,65 @@ import UIKit
 
 class ProductCell: UICollectionViewCell {
     
+    var product: Product!{
+        didSet{
+            if product != nil {
+                
+                self.avatarImage = {
+                    let image = UIImageView()
+                    image.backgroundColor = .red
+                    return image
+                }()
+                
+                self.productTitle = {
+                    let label = UILabel()
+                    label.text = product.title
+                    label.backgroundColor = .yellow
+                    return label
+                }()
+                
+                self.priceLabel = {
+                    let label = UILabel()
+                    label.text = String(product.price)
+                    label.backgroundColor = .blue
+                    return label
+                }()
+                
+               self.sellerLabel = {
+                    let label = UILabel()
+                    label.text = product.seller
+                    label.backgroundColor = .darkGray
+                    return label
+                }()
+                
+                self.buyButton = {
+                    let button = UIButton()
+                    button.titleLabel?.text = "Adicionar ao carrinho"
+                    button.titleLabel?.textColor = .black
+                    button.backgroundColor = .white
+                    return button
+                }()
+                
+                placeSubViews()
+
+            }
+        }
+    }
+    
+    var avatarImage: UIImageView!
+    var productTitle: UILabel!
+    var priceLabel: UILabel!
+    var sellerLabel: UILabel!
+    var buyButton: UIButton!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .green
-        placeSubViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    // Create Subviews 
-    
-    let avatarImage: UIImageView = {
-        let image = UIImageView()
-        image.backgroundColor = .red
-        return image
-    }()
-    
-    let productTitle: UILabel = {
-        let label = UILabel()
-        label.text = "STROMTROOPER DE BRINQUEDO"
-        label.backgroundColor = .yellow
-        return label
-    }()
-    
-    let priceLabel: UILabel = {
-        let label = UILabel()
-        label.text = "R$79,90"
-        label.backgroundColor = .blue
-        return label
-    }()
-    
-    let sellerLabel: UILabel = {
-        let label = UILabel()
-        label.text = "vendido por Marcelo"
-        label.backgroundColor = .darkGray
-        return label
-    }()
-    
-    let buyButton: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.text = "Adicionar ao carrinho"
-        button.titleLabel?.textColor = .black
-        button.backgroundColor = .white
-        return button
-    }()
     
     
     func placeSubViews(){
@@ -86,7 +98,7 @@ class ProductCell: UICollectionViewCell {
         priceLabel.leftAnchor.constraint(equalTo: avatarImage.rightAnchor, constant: 13).isActive = true
         priceLabel.topAnchor.constraint(equalTo: productTitle.bottomAnchor, constant: 8).isActive = true
         priceLabel.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.15).isActive = true
-        priceLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.06)
+        priceLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.06).isActive = true
         
         buyButton.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 8).isActive = true
         buyButton.leftAnchor.constraint(equalTo: avatarImage.rightAnchor, constant: 13).isActive = true
@@ -96,7 +108,7 @@ class ProductCell: UICollectionViewCell {
         sellerLabel.leftAnchor.constraint(equalTo: avatarImage.rightAnchor, constant: 13).isActive = true
         sellerLabel.bottomAnchor.constraint(equalTo: avatarImage.bottomAnchor).isActive = true
         sellerLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8).isActive = true
-        sellerLabel.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2)
+        sellerLabel.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2).isActive = true
  
     }
     
