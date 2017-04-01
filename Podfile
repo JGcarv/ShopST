@@ -9,4 +9,5 @@ target 'ShopStarWars' do
   pod 'TinyConstraints', '~> 1.2'
   pod 'Alamofire', '~> 4.4'
   pod 'SwiftyJSON'
+  pod 'AlamofireImage', '~> 3.1'
 end

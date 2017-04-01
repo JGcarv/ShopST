@@ -16,6 +16,10 @@ class CartController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setNavigationBarStyle()
+        self.title = "Carrinho"
+        
         collectionView?.backgroundColor = .white
         collectionView?.register(ProductCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(UICollectionViewCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)

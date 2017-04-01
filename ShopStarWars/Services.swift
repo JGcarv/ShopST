@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import AlamofireImage
 import SwiftyJSON
 
 struct Service {
@@ -28,12 +29,12 @@ struct Service {
                     
                     let seller = productJSON.1["seller"].stringValue
                     let title = productJSON.1["title"].stringValue
-                    let price = productJSON.1["price"].doubleValue
+                    let price = productJSON.1["price"].intValue
                     let zipcode = productJSON.1["zipcode"].stringValue
                     let thumbnailHd = productJSON.1["thumbnailHd"].stringValue
                     let date = productJSON.1["date"].stringValue
                     
-                    products.append(Product(title: title, price: price, zipcode: zipcode, seller: seller, thumbnailHD: thumbnailHd, date: date))
+                    products.append(Product(title: title, price: Double(price) / 100.00, zipcode: zipcode, seller: seller, thumbnailHD: thumbnailHd, date: date))
                     
                 }
                 
@@ -59,6 +60,24 @@ struct Service {
             }
         }
         
+    }
+    
+    
+    func getImageFrom(url: String, completion: @escaping(UIImage?) -> ()) {
+        var returnImage: UIImage? = nil
+        Alamofire.request(url).responseImage { (response) in
+            switch response.result {
+            case .failure(let erro):
+                print(erro)
+            case .success( _):
+                if let image = response.result.value {
+                    print("image downloaded: \(image)")
+                    returnImage = image
+                }
+                
+            }
+        }
+        completion(returnImage)
     }
 }
 

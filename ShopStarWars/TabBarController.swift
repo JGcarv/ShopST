@@ -13,6 +13,9 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tabBar.barTintColor = .SWBlue
+        tabBar.isTranslucent = false
+        
         let homeController = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
         let homeNavController = UINavigationController(rootViewController: homeController)
         homeNavController.tabBarItem = UITabBarItem(title: "Home", image: nil, selectedImage: nil)

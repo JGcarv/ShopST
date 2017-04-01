@@ -24,6 +24,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.rootViewController = TabBarController()
         
+        let statusBarBackgroundColor = UIView()
+        statusBarBackgroundColor.backgroundColor = UIColor.SWBlue
+        window?.addSubview(statusBarBackgroundColor)
+        window?.addConstarintWithFormat(format: "H:|[v0]|", views: statusBarBackgroundColor)
+        window?.addConstarintWithFormat(format: "V:|[v0(20)]", views: statusBarBackgroundColor)
+        
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        let navBArAppearance = UINavigationBar.appearance()
+        navBArAppearance.backgroundColor = .SWBlue
+        navBArAppearance.tintColor = .white
+        navBArAppearance.alpha = 10
+        navBArAppearance.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
         return true
     }
 

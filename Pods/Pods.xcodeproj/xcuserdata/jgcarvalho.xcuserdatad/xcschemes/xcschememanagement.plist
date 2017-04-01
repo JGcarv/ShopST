@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>AlamofireImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-ShopStarWars.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,7 +32,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0EA897B9C0A253F3A4618A1C20855643</key>
+		<key>15440F4773EA15A94E592A46A177C4C3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>759AD89A279D303F6D083EB81690BF58</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -37,12 +47,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FDC23A2728E5381D4B062911191A8B83</key>
+		<key>9EFE4C70245EE2857D336B8B9FA4E825</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FFF111F5484B34B465B859CD8E013971</key>
+		<key>C1A68135F1309E79ADCC670BDDB2FAAC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

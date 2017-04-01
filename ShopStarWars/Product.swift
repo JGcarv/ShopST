@@ -11,14 +11,7 @@ import Foundation
 class Product
 {
     
-//    required init() {
-//                self.title = nil
-//                self.price = nil
-//                self.zipcode = nil
-//                self.seller = nil
-//                self.thumbnailHD = nil
-//                self.date = nil
-//    }
+
     init(title: String, price: Double, zipcode: String, seller: String, thumbnailHD: String, date: String) {
         self.title = title
         self.price = price
@@ -36,17 +29,4 @@ class Product
     var date: String!
 
 }
-//
-//extension Product : ArrowParsable {
-//    
-//      func deserialize(_ json: JSON) {
-//        
-//        title <-- json["title"]
-//        price <-- json["price"]
-//        zipcode <-- json["zipcode"]
-//        seller <-- json["seller"]
-//        thumbnailHD <-- json["thumbnailHd"]
-//        date <-- json["date"]
-//
-//    }
-//}
+
