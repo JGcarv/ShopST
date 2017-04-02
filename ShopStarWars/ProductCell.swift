@@ -11,16 +11,48 @@ import AlamofireImage
 
 class ProductCell: UICollectionViewCell {
     
+    var delegate: CollectionViewControllerDelegate?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         
         productTitle = UILabel()
         sellerLabel = UILabel()
+        setUpButtons()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setUpButtons() {
+        
+        buyButton = UIButton()
+        buyButton.layer.cornerRadius = 8
+        
+        buyButton.setTitle("Comprar", for: .normal)
+        buyButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 14)
+        buyButton.titleLabel?.textColor = .white
+        buyButton.addTarget(self, action: #selector(sendItemToDelegate), for: .touchUpInside)
+        //button.addTarget(self, action: self.delegate?.addToCart, for: .touchUpInside)
+        buyButton.backgroundColor = .SWRed
+
+        plusQuantButton = UIButton()
+        plusQuantButton.layer.cornerRadius = 16
+        plusQuantButton.setTitle("+", for: .normal)
+        plusQuantButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 15)
+        plusQuantButton.addTarget(self, action: #selector(increaseQuantity), for: .touchUpInside)
+        plusQuantButton.setTitleColor(.SWRed, for: .normal)
+        
+        minusQuantButton = UIButton()
+        minusQuantButton.layer.cornerRadius = 16
+        minusQuantButton.setTitle("-", for: .normal)
+        minusQuantButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 15)
+        minusQuantButton.addTarget(self, action: #selector(decreaseQuantity), for: .touchUpInside)
+        minusQuantButton.setTitleColor(.SWRed, for: .normal)
+ 
+        
     }
     
     var product: Product!{
@@ -69,17 +101,23 @@ class ProductCell: UICollectionViewCell {
     var priceLabel: UILabel!
     var dateLabel: UILabel!
     var sellerLabel: UILabel!
+    var buyButton: UIButton!
+    var minusQuantButton: UIButton!
+    var plusQuantButton:UIButton!
+    var quantity = 1
     
-    let buyButton: UIButton = {
-        let button = UIButton()
-        button.layer.cornerRadius = 8
+    //let buyButton: UIButton = {
+        //let button = UIButton()
+        //buyButton.layer.cornerRadius = 8
         
-        button.setTitle("Comprar", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 14)
-        button.titleLabel?.textColor = .white
-        button.backgroundColor = .SWRed
-        return button
-    }()
+        //buyButton.setTitle("Comprar", for: .normal)
+        //buyButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 14)
+        //buyButton.titleLabel?.textColor = .white
+        //buyButton.addTarget(self, action: #selector(sendItemToDelegate), for: .touchUpInside)
+        //button.addTarget(self, action: self.delegate?.addToCart, for: .touchUpInside)
+        //buyButton.backgroundColor = .SWRed
+        //return button
+    //}()
     
     let contentContainer: UIView = {
         let view = UIView()
@@ -91,26 +129,6 @@ class ProductCell: UICollectionViewCell {
         let view = UIView()
         //view.backgroundColor = .yellow
         return view
-    }()
-
-    let plusQuantButton: UIButton = {
-        let button = UIButton()
-        button.layer.cornerRadius = 16
-        button.setTitle("+", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 15)
-        button.setTitleColor(.SWRed, for: .normal)
-        //button.backgroundColor = .SWRed
-        return button
-    }()
-    
-    let minusQuantButton: UIButton = {
-        let button = UIButton()
-        button.layer.cornerRadius = 16
-        button.setTitle("-", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 15)
-        button.setTitleColor(.SWRed, for: .normal)
-        //button.backgroundColor = .SWRust
-        return button
     }()
     
     let quantLabel: UILabel = {
@@ -127,8 +145,13 @@ class ProductCell: UICollectionViewCell {
         productTitle.text = ""
         sellerLabel.text = ""
         priceLabel.text = ""
+
     }
     
+    func sendItemToDelegate(){
+        let item = Item(self.product, self.quantity)
+        self.delegate?.addToCart(item: item)
+    }
     
     func placeSubViews(){
         addSubview(avatarImage)
@@ -186,4 +209,15 @@ class ProductCell: UICollectionViewCell {
         quantityContainer.stack([minusQuantButton, quantLabel, plusQuantButton], axis: .horizontal, spacing:7)
     }
     
+    func increaseQuantity() {
+        self.quantity += 1
+        self.quantLabel.text = String(self.quantity)
+    }
+    
+    func decreaseQuantity() {
+        if (quantity > 1 ){
+            self.quantity -= 1
+            self.quantLabel.text = String(self.quantity)
+        }
+    }
 }

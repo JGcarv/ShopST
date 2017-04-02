@@ -7,68 +7,87 @@
 //
 
 import UIKit
+import TinyConstraints
 
-class CartController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CartFooterDelegate {
+class CartController: UIViewController, CartFooterDelegate {
     
-    let cellId = "cellId"
-    let headerId = "headerId"
-    let footerId = "footer"
+    let cartView: CartView = CartView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setNavigationBarStyle()
         self.title = "Carrinho"
+        view.backgroundColor = .white
         
-        collectionView?.backgroundColor = .white
-        collectionView?.register(ProductCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(UICollectionViewCell.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-        collectionView?.register(CartFooter.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: footerId)
+        placeSubviews()
+    }
+    
+    func placeSubviews(){
+        let container = UIView()
+        self.view.addSubview(container)
+        //container.clipsToBounds = true
         
-    }
-    
-    
-    //Itens
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        return cell
-        }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 50)
-    }
-    
-    
-    //Header and Footer
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        container.edges(to: self.view, insets: UIEdgeInsets(top: 80, left: 24, bottom: -10, right: -24))
         
-        if kind == UICollectionElementKindSectionHeader {
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath)
-            header.backgroundColor = .blue
-            return header
-        } else {
-            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footerId, for: indexPath) as! CartFooter
-            footer.backgroundColor = .blue
-            footer.delegate = self
-            return footer
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 50)
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-         return CGSize(width: view.frame.width, height: 200)
+        let itemsInCart = SWListView()
+        itemsInCart.titleLabel.text = "Resumo de items"
+        
+        let lastTx = SWListView()
+        lastTx.titleLabel.text = "Histórico de Compras"
+
+        
+        let totalLabel = UILabel()
+        totalLabel.text = "Total: R$00,00"
+        totalLabel.textAlignment = NSTextAlignment.right
+        totalLabel.font = UIFont(name: "Avenir-Book", size: 20)
+        
+        let buyButton = UIButton()
+        buyButton.setTitle("Finalizar Pagamento", for: .normal)
+        buyButton.setTitleColor(.white, for: .normal)
+        buyButton.backgroundColor = .SWRed
+        buyButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 18)
+        buyButton.layer.cornerRadius = 8
+        buyButton.addTarget(self, action: #selector(launchPaymentView), for: .touchUpInside)
+        
+        
+        container.translatesAutoresizingMaskIntoConstraints = false
+        itemsInCart.translatesAutoresizingMaskIntoConstraints = false
+        lastTx.translatesAutoresizingMaskIntoConstraints = false
+        totalLabel.translatesAutoresizingMaskIntoConstraints = false
+        buyButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        container.addSubview(itemsInCart)
+        container.addSubview(totalLabel)
+        container.addSubview(lastTx)
+        container.addSubview(buyButton)
+        
+        itemsInCart.top(to: container)
+        itemsInCart.right(to: container)
+        itemsInCart.left(to: container)
+        itemsInCart.height(min: 200)
+        
+        totalLabel.top(to: itemsInCart, itemsInCart.bottomAnchor)
+        totalLabel.left(to: container)
+        totalLabel.right(to: container)
+        totalLabel.height(40)
+        
+        lastTx.top(to: totalLabel, totalLabel.bottomAnchor)
+        lastTx.left(to: container)
+        lastTx.right(to: container)
+        lastTx.height(min: 200)
+        
+        //buyButton.top(to: lastTx, lastTx.bottomAnchor)
+        buyButton.height(50)
+        buyButton.left(to: container, offset:25)
+        buyButton.right(to: container, offset: -25)
+        buyButton.bottom(to: container)
+   
     }
     
     func launchPaymentView() {
-        self.navigationController?.pushViewController(PaymentViewController(collectionViewLayout: UICollectionViewFlowLayout()), animated: true)
+        let pvc = PaymentViewController()
+        self.navigationController?.pushViewController(pvc, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {

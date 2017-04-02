@@ -8,10 +8,11 @@
 
 import UIKit
 
-class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CollectionViewControllerDelegate {
     
     let cellId = "cellId"
     var products: [Product] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +53,7 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         cell.product = products[indexPath.item]
         cell.layer.cornerRadius = 5
         cell.clipsToBounds = true
+        cell.delegate = self
         return cell
     }
     
@@ -66,5 +68,14 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
         //UINavigationBar.appearance().tintColor = .white
         //UINavigationBar.appearance().alpha = 1
     }
+    
+    func addToCart(item: Item) {
+        print(item.product.title)
+    }
+    
 }
 
+protocol CollectionViewControllerDelegate {
+    
+    func addToCart(item: Item)
+}

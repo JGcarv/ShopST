@@ -14,6 +14,7 @@ extension UIColor
     static let SWBlue = UIColor(hue: 205/360, saturation: 1, brightness: 47/100, alpha: 1)
     static let SWWine = UIColor(hue: 350/360, saturation: 84/100, brightness: 40/100, alpha: 1)
     static let SWRed = UIColor(hue: 6/360, saturation: 92/100, brightness: 67/100, alpha: 1)
+    static let SWRedDisabled = UIColor(hue: 6/360, saturation: 92/100, brightness: 67/100, alpha: 0.5)
     static let SWRust = UIColor(hue: 357/360, saturation: 32/100, brightness: 52/100, alpha: 1)
     static let SWGrey = UIColor(hue: 210/360, saturation: 2/100, brightness: 80/100, alpha: 1)
 
@@ -42,5 +43,19 @@ extension UIViewController {
         self.navigationController?.navigationBar.alpha = 1
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().alpha = 1
+    }
+}
+
+extension UIButton {
+    
+    func setBackgroundColor(color: UIColor, forState: UIControlState) {
+        
+        UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
+        UIGraphicsGetCurrentContext()!.setFillColor(color.cgColor)
+        UIGraphicsGetCurrentContext()!.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        let colorImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        self.setBackgroundImage(colorImage, for: forState)
     }
 }
