@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftIconFont
+
 
 class TabBarController: UITabBarController {
     
@@ -19,12 +21,13 @@ class TabBarController: UITabBarController {
         let homeController = HomeController(collectionViewLayout: UICollectionViewFlowLayout())
         let homeNavController = UINavigationController(rootViewController: homeController)
         homeNavController.tabBarItem = UITabBarItem(title: "Home", image: nil, selectedImage: nil)
-
+        homeNavController.tabBarItem.icon(from: .FontAwesome, code: "home", imageSize: CGSize(width: 20, height: 20), ofSize: 20)
+        
         //let cartController = CartController(collectionViewLayout: UICollectionViewFlowLayout())
         let cartController = CartController()
         let cartNavController = UINavigationController(rootViewController: cartController)
         cartNavController.tabBarItem = UITabBarItem(title: "Carrinho", image: nil, selectedImage: nil)
-        cartNavController.tabBarItem.badgeValue = "1"
+        cartNavController.tabBarItem.icon(from: .FontAwesome, code: "shopping-cart", imageSize: CGSize(width: 20, height: 20), ofSize: 20)
         
         viewControllers = [homeNavController, cartNavController]
     }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+
+typealias Transaction = (date: Date, valor: Double)
+typealias Item = (product: Product, quantity: Int)
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -19,19 +23,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        
-        //window?.rootViewController = UINavigationController(rootViewController: homeController)
-        
         window?.rootViewController = TabBarController()
         
+        //Styling status bar
         let statusBarBackgroundColor = UIView()
         statusBarBackgroundColor.backgroundColor = UIColor.SWBlue
         window?.addSubview(statusBarBackgroundColor)
         window?.addConstarintWithFormat(format: "H:|[v0]|", views: statusBarBackgroundColor)
         window?.addConstarintWithFormat(format: "V:|[v0(20)]", views: statusBarBackgroundColor)
-        
         UIApplication.shared.statusBarStyle = .lightContent
         
+        //Styling Navigation BAr
         let navBArAppearance = UINavigationBar.appearance()
         navBArAppearance.backgroundColor = .SWBlue
         navBArAppearance.tintColor = .white

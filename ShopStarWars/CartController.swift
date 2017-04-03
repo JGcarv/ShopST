@@ -9,9 +9,13 @@
 import UIKit
 import TinyConstraints
 
-class CartController: UIViewController, CartFooterDelegate {
+class CartController: UIViewController {
     
-    let cartView: CartView = CartView()
+    let containerCart = UIView()
+    let itemsInCart = SWListView()
+    let lastTx = SWListView()
+    let totalLabel = UILabel()
+    let buyButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,84 +24,109 @@ class CartController: UIViewController, CartFooterDelegate {
         self.title = "Carrinho"
         view.backgroundColor = .white
         
-        placeSubviews()
-    }
-    
-    func placeSubviews(){
-        let container = UIView()
-        self.view.addSubview(container)
-        //container.clipsToBounds = true
+        placeAndConstrainSubviews()
+        buyButton.isEnabled = false
         
-        container.edges(to: self.view, insets: UIEdgeInsets(top: 80, left: 24, bottom: -10, right: -24))
-        
-        let itemsInCart = SWListView()
-        itemsInCart.titleLabel.text = "Resumo de items"
-        
-        let lastTx = SWListView()
-        lastTx.titleLabel.text = "Histórico de Compras"
 
-        
-        let totalLabel = UILabel()
-        totalLabel.text = "Total: R$00,00"
-        totalLabel.textAlignment = NSTextAlignment.right
-        totalLabel.font = UIFont(name: "Avenir-Book", size: 20)
-        
-        let buyButton = UIButton()
-        buyButton.setTitle("Finalizar Pagamento", for: .normal)
-        buyButton.setTitleColor(.white, for: .normal)
-        buyButton.backgroundColor = .SWRed
-        buyButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 18)
-        buyButton.layer.cornerRadius = 8
-        buyButton.addTarget(self, action: #selector(launchPaymentView), for: .touchUpInside)
-        
-        
-        container.translatesAutoresizingMaskIntoConstraints = false
-        itemsInCart.translatesAutoresizingMaskIntoConstraints = false
-        lastTx.translatesAutoresizingMaskIntoConstraints = false
-        totalLabel.translatesAutoresizingMaskIntoConstraints = false
-        buyButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        container.addSubview(itemsInCart)
-        container.addSubview(totalLabel)
-        container.addSubview(lastTx)
-        container.addSubview(buyButton)
-        
-        itemsInCart.top(to: container)
-        itemsInCart.right(to: container)
-        itemsInCart.left(to: container)
-        itemsInCart.height(min: 200)
-        
-        totalLabel.top(to: itemsInCart, itemsInCart.bottomAnchor)
-        totalLabel.left(to: container)
-        totalLabel.right(to: container)
-        totalLabel.height(40)
-        
-        lastTx.top(to: totalLabel, totalLabel.bottomAnchor)
-        lastTx.left(to: container)
-        lastTx.right(to: container)
-        lastTx.height(min: 200)
-        
-        //buyButton.top(to: lastTx, lastTx.bottomAnchor)
-        buyButton.height(50)
-        buyButton.left(to: container, offset:25)
-        buyButton.right(to: container, offset: -25)
-        buyButton.bottom(to: container)
-   
     }
     
     func launchPaymentView() {
         let pvc = PaymentViewController()
         self.navigationController?.pushViewController(pvc, animated: true)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
+        let total = Cart.calculateTotal()
+        totalLabel.text = String(format: "Total: R$%.2f", total)
+        updateCartList()
+        updateTxList()
     }
- 
-}
-
-protocol CartFooterDelegate {
     
-    func launchPaymentView()
+    func addItemInCart(item: Item){
+        buyButton.isEnabled = true
+        let finalView = prepareItemForView(item: item)
+        itemsInCart.arrangeView(view: finalView)
+        
+        let total = Cart.calculateTotal()
+        totalLabel.text = String(format: "Total: R$%.2f", total)
+ 
+    }
+    
+    func prepareItemForView(item: Item) -> UIView{
+        let nome = item.product.title!
+        let price = item.product.price!
+        let quantity = item.quantity
+
+        let nomeLabel = UILabel()
+        nomeLabel.text = nome
+        let priceLabel = UILabel()
+        priceLabel.text = String(format: "R$%.2f", price)
+        let quantLabel = UILabel()
+        quantLabel.text = "\(quantity)x   "
+        
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.distribution = .equalCentering
+        self.view.addSubview(nomeLabel)
+        self.view.addSubview(quantLabel)
+        self.view.addSubview(priceLabel)
+        view.addArrangedSubview(nomeLabel)
+        view.addArrangedSubview(quantLabel)
+        view.addArrangedSubview(priceLabel)
+        
+        return view
+    }
+    
+    func prepareTxForView(tx: Transaction) -> UIView{
+        let date = tx.date
+        let price = tx.valor
+        
+        let dateLabel = UILabel()
+        let formater = DateFormatter()
+        formater.dateFormat = "dd/MM/yyyy HH:mm"
+        dateLabel.text = formater.string(from: date)
+        
+        
+        let priceLabel = UILabel()
+        priceLabel.text = String(format: "valor: R$%.2f", price)
+        
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.distribution = .equalCentering
+        self.view.addSubview(dateLabel)
+        self.view.addSubview(priceLabel)
+        view.addArrangedSubview(dateLabel)
+        view.addArrangedSubview(priceLabel)
+        
+        return view
+    }
+    
+    func addTransaction(tx: Transaction){
+        let finalView = prepareTxForView(tx: tx)
+        lastTx.arrangeView(view: finalView)
+    }
+
+    func updateCartList() {
+        if (Cart.itensInCart.count == 0){
+            itemsInCart.setToEmptyState()
+        } else if(Cart.itensInCart.count != itemsInCart.contentContainer.arrangedSubviews.count - 1){
+            for item in Cart.itensInCart{
+                addItemInCart(item: item)
+            }
+        }
+    }
+    
+    func updateTxList() {
+        if (Cart.lastTransactions.count == 0){
+            lastTx.setToEmptyState()
+        } else if (Cart.lastTransactions.count != lastTx.contentContainer.arrangedSubviews.count - 1) {
+            lastTx.setToEmptyState()
+            for transaction in Cart.lastTransactions{
+                addTransaction(tx: transaction)
+            }
+        }
+    }
 }
 

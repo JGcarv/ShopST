@@ -45,7 +45,7 @@ struct Service {
     
     
     
-    func makeTransction(trasaction: [String: Any]){
+    func makeTransction(trasaction: [String: Any], completion: @escaping (String) -> ()){
         
         let url = "http://private-926595-shopsw1.apiary-mock.com/shopsw/payment"
         let parameters = trasaction
@@ -56,7 +56,8 @@ struct Service {
                 print(erro)
             case .success(let value):
                 let statusJSON = JSON(value)
-                print(statusJSON)
+                let status = statusJSON["status"].string
+                completion(status!)
             }
         }
         
@@ -71,7 +72,6 @@ struct Service {
                 print(erro)
             case .success( _):
                 if let image = response.result.value {
-                    print("image downloaded: \(image)")
                     returnImage = image
                 }
                 

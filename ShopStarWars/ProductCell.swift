@@ -29,14 +29,12 @@ class ProductCell: UICollectionViewCell {
     func setUpButtons() {
         
         buyButton = UIButton()
-        buyButton.layer.cornerRadius = 8
-        
         buyButton.setTitle("Comprar", for: .normal)
         buyButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 14)
         buyButton.titleLabel?.textColor = .white
         buyButton.addTarget(self, action: #selector(sendItemToDelegate), for: .touchUpInside)
         //button.addTarget(self, action: self.delegate?.addToCart, for: .touchUpInside)
-        buyButton.backgroundColor = .SWRed
+        buyButton.setBackgroundColor(color: .SWRed, forState: .normal)
 
         plusQuantButton = UIButton()
         plusQuantButton.layer.cornerRadius = 16
@@ -105,29 +103,14 @@ class ProductCell: UICollectionViewCell {
     var minusQuantButton: UIButton!
     var plusQuantButton:UIButton!
     var quantity = 1
-    
-    //let buyButton: UIButton = {
-        //let button = UIButton()
-        //buyButton.layer.cornerRadius = 8
-        
-        //buyButton.setTitle("Comprar", for: .normal)
-        //buyButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 14)
-        //buyButton.titleLabel?.textColor = .white
-        //buyButton.addTarget(self, action: #selector(sendItemToDelegate), for: .touchUpInside)
-        //button.addTarget(self, action: self.delegate?.addToCart, for: .touchUpInside)
-        //buyButton.backgroundColor = .SWRed
-        //return button
-    //}()
-    
+
     let contentContainer: UIView = {
         let view = UIView()
-        //view.backgroundColor = .yellow
         return view
     }()
     
     let quantityContainer: UIView = {
         let view = UIView()
-        //view.backgroundColor = .yellow
         return view
     }()
     

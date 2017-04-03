@@ -8,15 +8,15 @@
 
 import Foundation
 
-typealias Item = (product: Product, quantity: Int)
-
 class Cart {
     
     static var itensInCart: [Item] = []
+    static var lastTransactions: [Transaction] = []
     
     static func addToCart(item: Item) {
         itensInCart.append(item)
     }
+    
     
     static func calculateTotal() -> Double{
         var total = 0.0
@@ -26,4 +26,11 @@ class Cart {
         return total
     }
     
+    static func addTransaction(transaction: Transaction){
+        lastTransactions.append(transaction)
+    }
+    
+    static func RemoveAll() {
+        itensInCart = []
+    }
 }

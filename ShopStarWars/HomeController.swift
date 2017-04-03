@@ -17,22 +17,9 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        //Basic controller Confir
         self.title = "Shop Star Wars"
-        
-        
-        self.setNavigationBarStyle()
-        //setBarsStyle()
-        
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.barTintColor = .SWBlue
-        self.navigationController?.navigationBar.alpha = 1
-        
-        UINavigationBar.appearance().backgroundColor = .SWBlue
-        UINavigationBar.appearance().tintColor = .white
-        UINavigationBar.appearance().alpha = 1
-        
-        
+        setNavigationBarStyle()
         
         collectionView?.backgroundColor =  .SWGrey
         collectionView?.register(ProductCell.self, forCellWithReuseIdentifier: cellId)
@@ -60,17 +47,12 @@ class HomeController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width - 50, height: 150)
     }
-    
-    func setBarsStyle(){
-        self.navigationController?.navigationBar.tintColor = .white
-        self.navigationController?.navigationBar.barTintColor = .SWBlue
-        self.navigationController?.navigationBar.alpha = 1
-        //UINavigationBar.appearance().tintColor = .white
-        //UINavigationBar.appearance().alpha = 1
-    }
-    
+        
     func addToCart(item: Item) {
-        print(item.product.title)
+        Cart.addToCart(item: item)
+        let cvNav = tabBarController?.viewControllers?[1] as! UINavigationController
+        let cv = cvNav.topViewController as! CartController
+        cv.addItemInCart(item: item)
     }
     
 }

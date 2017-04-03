@@ -8,14 +8,42 @@
 
 import UIKit
 import TinyConstraints
+import SwiftIconFont
 
 class SWListView: UIView {
+    
+    var titleLabel: UILabel = UILabel()
+    var contentContainer: UIStackView = UIStackView()
+    var emptyStatement: String = "Não há conteúdo disponível"
+    
+    
+    private let textLabel = UILabel()
+    private let iconLabel = UILabel()
+    private let fillerView = UIView()
+    private var isEmpty = true
+    private var hasFiller = false
+    
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        applyStyle()
+
+        //create empty labels
+        textLabel.text = emptyStatement
+        textLabel.font = UIFont(name: "Avenir-Book", size: 14)
+        textLabel.textColor = .white
+        textLabel.backgroundColor = UIColor(white: 0, alpha: 0.3)
+        textLabel.textAlignment = .center
+        
+        iconLabel.font = UIFont.icon(from: .FontAwesome, ofSize: 50)
+        iconLabel.text = String.fontAwesomeIcon("frown-o")
+        iconLabel.textColor = .white
+        iconLabel.backgroundColor = UIColor(white: 0, alpha: 0.3)
+        iconLabel.textAlignment = .center
+        
+        
         placeSubviews()
+        config()
         setToEmptyState()
     }
     
@@ -23,44 +51,62 @@ class SWListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var titleLabel: UILabel = UILabel()
-    var contentContainer: UIStackView = UIStackView()
-    var emptyStatement: String = "Não há conteúdo disponível"
-    private var emptyLabel: UILabel = UILabel()
-    
-    private var isEmpity = true
-    
-    func cleanEmptyState() {
-        contentContainer.removeArrangedSubview(emptyLabel)
-        contentContainer.alignment = .leading
-        contentContainer.distribution = .equalSpacing
+    //Remove empty label and styling
+    private func cleanEmptyState() {
+        contentContainer.removeArrangedSubview(iconLabel)
+        contentContainer.removeArrangedSubview(textLabel)
+        contentContainer.distribution = .fill
+        isEmpty = false
     }
-    
+
     func setToEmptyState() {
-        contentContainer.addArrangedSubview(emptyLabel)
-        contentContainer.alignment = .center
-        contentContainer.distribution = .equalCentering
-        emptyLabel.text = emptyStatement
-        emptyLabel.textAlignment = .center
-        isEmpity = true
+        removeAllViews()
+        contentContainer.addArrangedSubview(iconLabel)
+        contentContainer.addArrangedSubview(textLabel)
+        contentContainer.distribution = .fillEqually
+        textLabel.left(to: contentContainer)
+        textLabel.right(to: contentContainer)
+        iconLabel.left(to: contentContainer)
+        iconLabel.right(to: contentContainer)
+        isEmpty = true
     }
+    
+    func removeAllViews() {
+        for view in contentContainer.arrangedSubviews {
+            contentContainer.removeArrangedSubview(view)
+        }
+    }
+    
     
     func arrangeView(view: UIView){
-        cleanEmptyState()
+        if (isEmpty){
+            cleanEmptyState()
+        }
         view.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(view)
-        view.height(min: 30)
-        view.right(to: contentContainer)
-        view.left(to: contentContainer)
+        view.height(max: 30)
+        view.width(contentContainer.layer.bounds.width, priority: .high, isActive: true)
         contentContainer.addArrangedSubview(view)
+        if !hasFiller {
+            self.addSubview(fillerView)
+            contentContainer.addArrangedSubview(fillerView)
+            hasFiller = false
+        }
+        
     }
     
-    private func applyStyle() {
-        titleLabel.font = UIFont(name: "Avenir-Medium", size: 18)
-        contentContainer.axis = .vertical
-        contentContainer.alignment = .leading
-        contentContainer.distribution = .equalSpacing
+    func setEmptyLabelText(newText: String){
+        emptyStatement = newText
+        textLabel.text = emptyStatement
     }
+    
+    //Styling and Configuration
+    private func config(){
+        titleLabel.font = UIFont(name: "Avenir-Medium", size: 18)
+        titleLabel.textColor = .SWBlue
+        contentContainer.axis = .vertical
+    }
+    
     
     private func placeSubviews(){
         
@@ -73,12 +119,13 @@ class SWListView: UIView {
         titleLabel.top(to: self)
         titleLabel.left(to: self)
         titleLabel.right(to: self)
-        titleLabel.height(30)
+        //titleLabel.height(max: 30)
+        titleLabel.height(30, priority: .high, isActive: true)
         
         contentContainer.top(to: titleLabel, titleLabel.bottomAnchor)
         contentContainer.left(to: self)
         contentContainer.right(to: self)
+//        contentContainer.width(self.layer.bounds.width, priority: .high, isActive: true)
         contentContainer.bottom(to: self)
-        
     }
 }

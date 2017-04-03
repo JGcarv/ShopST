@@ -13,6 +13,21 @@ import AKMaskField
 
 class PaymentViewController: UIViewController {
     
+    
+    let containerPayment = UIView()
+    let payForm = UIStackView()
+    let buyButton = UIButton()
+    let cardName = AKMaskField()
+    let cardNumber = AKMaskField()
+    let cardCvv = AKMaskField()
+    let cardDate = AKMaskField()
+    let valorLabel = UILabel()
+    let cardLabel = UILabel()
+    let nameLabel = UILabel()
+    let cvvLabel = UILabel()
+    let dateLabel = UILabel()
+    let payTitleLabel = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
@@ -20,102 +35,77 @@ class PaymentViewController: UIViewController {
         view.backgroundColor = .white
         setNavigationBarStyle()
         
-        let container = UIView()
-        self.view.addSubview(container)
-        container.translatesAutoresizingMaskIntoConstraints = false
-        container.edges(to: self.view, insets: UIEdgeInsets(top: 80, left: 24, bottom: 0, right: -24))
+        //Behaviours relates to layout and style are in the PaymentViewController extension
+        addConstraintsToViews()
+        configAndStyleViews()
         
-        let payInfo = SWListView()
-        payInfo.titleLabel.text = "Informações de pagamento"
-        payInfo.translatesAutoresizingMaskIntoConstraints = false
-        
-        container.addSubview(payInfo)
-        
-        payInfo.top(to: container)
-        payInfo.left(to: container)
-        payInfo.right(to: container)
-        payInfo.height(300)
-        
-        let buyButton = UIButton()
-        buyButton.setTitle("Efetuar pagamento", for: .normal)
-        buyButton.setTitleColor(.white, for: .normal)
-        buyButton.setBackgroundColor(color: .SWRedDisabled, forState: .disabled)
-        buyButton.setBackgroundColor(color: .SWRed, forState: .normal)
-        buyButton.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 18)
-        buyButton.layer.cornerRadius = 8
-        buyButton.addTarget(self, action: #selector(processPayment), for: .touchUpInside)
-        buyButton.isEnabled = false
-        
-        container.addSubview(buyButton)
-        buyButton.translatesAutoresizingMaskIntoConstraints = false
-
-        buyButton.top(to: payInfo, payInfo.bottomAnchor, offset: 10)
-        buyButton.left(to: container, offset: 30)
-        buyButton.right(to: container, offset: -30)
-        buyButton.height(50)
-        
-        let valorLabel = UILabel()
-        valorLabel.text = "R$00,00"
-        
-        let cardLabel = UILabel()
-        cardLabel.text = "Número do cartão"
-        
-        
-        cardNumber.maskExpression = "{dddd} - {dddd} - {dddd} - {dddd}"
-        cardNumber.maskTemplate = "número do cartão"
-        
-        let nameLabel = UILabel()
-        nameLabel.text = "Nome como está no Cartão"
-        
-        //cardName = AKMaskField()
-        cardName.placeholder = "nome"
-        
-        let cvvLabel = UILabel()
-        cvvLabel.text = "Código de segurança"
-        
-        
-        cardCvv.maskExpression = "{ddd}"
-        
-        let dateLabel = UILabel()
-        dateLabel.text = "Data de expiração"
-        
-        
-        cardDate.maskExpression = "{dd}/{dd}"
-        cardDate.maskTemplate = "dd/mm"
-        
-        
-        payInfo.arrangeView(view: valorLabel)
-        payInfo.arrangeView(view: nameLabel)
-        payInfo.arrangeView(view: cardName)
-        payInfo.arrangeView(view: cardLabel)
-        payInfo.arrangeView(view: cardNumber)
-        payInfo.arrangeView(view: cvvLabel)
-        payInfo.arrangeView(view: cardCvv)
-        payInfo.arrangeView(view: dateLabel)
-        payInfo.arrangeView(view: cardDate)
-
-        
+        cardName.addTarget(self, action: #selector(editingChaged(_:)), for: .editingChanged)
+        cardNumber.addTarget(self, action: #selector(editingChaged(_:)), for: .editingChanged)
+        cardCvv.addTarget(self, action: #selector(editingChaged(_:)), for: .editingChanged)
+        cardDate.addTarget(self, action: #selector(editingChaged(_:)), for: .editingChanged)
     }
     
-    let cardName = AKMaskField()
-    let cardNumber = AKMaskField()
-    let cardCvv = AKMaskField()
-    let cardDate = AKMaskField()
    
+    private func isAllFilled() -> Bool {
+        if (cardNumber.maskStatus == .complete && cardDate.maskStatus == .complete && cardCvv.maskStatus == .complete && cardName.text != ""){
+            return true
+        } else {
+        return false
+        }
+    }
+    
+    func editingChaged(_ textField: UITextField){
+        if(!isAllFilled()){
+            if (buyButton.isEnabled){
+                buyButton.isEnabled = false
+            }
+            return
+        }
+        buyButton.isEnabled = true
+    }
+
     
     func processPayment(){
-        let str = cardNumber.text!
-        print(cardName.maskStatus)
         
-        let str2 = str.replacingOccurrences(of: " - ", with: "")
-        //print(str2)
+        //build transaction
+        let valor = Int(Cart.calculateTotal() * 100)
+        let name = cardName.text!
+        let num = cardNumber.text!
+        let cvv = Int(cardCvv.text!)!
+        let expDate = cardDate.text!
+
         
-        let tx = ["card_number":"1234123412341234",
-                  "value":7990,
-                  "cvv":789,
-                  "card_holder_name":"Luke Skywalker",
-                  "exp_date":"12/24"] as [String : Any]
+        let tx = ["card_number": num,
+                  "value":valor,
+                  "cvv":cvv,
+                  "card_holder_name":name,
+                  "exp_date":expDate] as [String : Any]
         
-        Service.sharedInstance.makeTransction(trasaction: tx)
+        Service.sharedInstance.makeTransction(trasaction: tx) { (status) in
+            if (status == "successful"){
+                let alert = UIAlertController(title: "Pronto!", message: "Pagamento concluído com sucesso", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+                    let date = Date()
+                    let newTx = Transaction(date: date, valor: Cart.calculateTotal())
+                    Cart.addTransaction(transaction: newTx)
+                    let carrVC = self.navigationController?.viewControllers[0] as! CartController
+                    carrVC.addTransaction(tx: newTx)
+                    //remover todos os itens do Cart
+                    Cart.RemoveAll()
+                    self.navigationController?.popToRootViewController(animated: true)
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+                
+            } else {
+                let alert = UIAlertController(title: "Oops!", message: "Houve um problema com o pagamento", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+                    self.navigationController?.popToRootViewController(animated: true)
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+        }
     }
 }
